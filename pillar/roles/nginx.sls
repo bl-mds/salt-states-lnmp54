@@ -1,0 +1,2 @@
+nginx:
+  logdir: /data/logs
