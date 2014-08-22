@@ -1,3 +1,4 @@
+{% set logdir = salt['pillar.get']('nginx:logdir', '/var/log/nginx') %}
 nginx:
   pkg.installed:
     - name: nginx
@@ -7,12 +8,12 @@ nginx:
     - reload: True
     - require:
       - pkg: nginx
+      - cmd: {{logdir}}
     - watch:
       - pkg: nginx
       - file: /etc/nginx/nginx.conf
       - file: /etc/nginx/conf.d/
 
-{% set logdir = salt['pillar.get']('nginx:logdir', '/var/log/nginx') %}
 /etc/nginx/nginx.conf:
   file.managed:
     - source: salt://nginx/files/etc/nginx/nginx.conf
